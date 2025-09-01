@@ -37,7 +37,7 @@ const OrderDetails = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-      <Card sx={{ maxWidth: 500, p: 2, boxShadow: 3 }}>
+      <Card sx={{ width: 500, p: 2, boxShadow: 3 }}>
         <CardContent>
           <Typography variant="h5">Order Details</Typography>
           <Typography variant="h6">Destination: {order.destination}</Typography>
