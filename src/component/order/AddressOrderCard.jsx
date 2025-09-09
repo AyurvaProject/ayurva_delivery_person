@@ -8,8 +8,32 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const AddressOrderCard = ({ order }) => {
+const AddressOrderCard = ({ order, status, type }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (status == "all") {
+      if (type === "pr") {
+        navigate(`/req-pr-orders-inside/${order.address.address_id}`);
+        return;
+      }
+      navigate(`/req-orders-inside/${order.address.address_id}`);
+    } else if (status == "pending") {
+      if (type === "pr") {
+        navigate(`/pending-pr-orders-inside/${order.address.address_id}`);
+        return;
+      }
+      navigate(`/pending-orders-inside/${order.address.address_id}`);
+    } else {
+      if (type === "pr") {
+        navigate(`/completed-pr-orders-inside/${order.address.address_id}`);
+        return;
+      }
+      navigate(`/completed-orders-inside/${order.address.address_id}`);
+    }
+  };
   return (
     <Card
       sx={{
@@ -26,16 +50,6 @@ const AddressOrderCard = ({ order }) => {
       // onClick={() => (window.location.href = role.path)}
     >
       <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-        {/* <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      mb: 2,
-                    }}
-                  >
-                    {role.icon}
-                  </Box> */}
         <Typography variant="h6" fontWeight="bold" color="primary">
           To {order.orders[0].user.user_name}
         </Typography>
@@ -58,6 +72,7 @@ const AddressOrderCard = ({ order }) => {
             textTransform: "none",
             borderRadius: "10px",
           }}
+          onClick={handleNavigate}
         >
           See Details
         </Button>

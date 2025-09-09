@@ -56,7 +56,7 @@ const PendingOrderListSection = () => {
       <Grid container spacing={3}>
         {ordersByAddress.map((orderGroup) => (
           <Grid item xs={12} sm={6} md={4} key={orderGroup.address.address_id}>
-            <AddressOrderCard order={orderGroup} />
+            <AddressOrderCard order={orderGroup} status="pending" type="npr" />
           </Grid>
         ))}
       </Grid>

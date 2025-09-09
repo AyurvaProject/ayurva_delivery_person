@@ -17,7 +17,7 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomSnackbar from "../../component/snackbar/CustomSnackbar";
 import { useAuth } from "../../context/AuthContext";
 import { GetCurrentUser } from "../../apis/auth/Auth";
@@ -25,7 +25,6 @@ import { GetCurrentUser } from "../../apis/auth/Auth";
 const SignInFormSection = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snackbar, setSnackbar] = useState({
@@ -85,33 +84,47 @@ const SignInFormSection = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(135deg, #e3f2fd, #f5f5f5)",
+        background: "linear-gradient(135deg, #E3F2FD, #BBDEFB)", // blue gradient
         p: 2,
       }}
     >
       <Paper
-        elevation={6}
+        elevation={8}
         sx={{
-          maxWidth: 400,
+          maxWidth: 420,
           width: "100%",
-          borderRadius: 3,
+          borderRadius: 4,
           p: { xs: 3, sm: 4 },
           display: "flex",
           flexDirection: "column",
           gap: 2,
+          backgroundColor: "#ffffff",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
         }}
         component="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Typography
-          variant="h5"
-          fontWeight={600}
-          textAlign="center"
-          gutterBottom
-        >
-          Sign In
-        </Typography>
+        {/* Header with Delivery Icon */}
+        <Box sx={{ textAlign: "center", mb: 1 }}>
+          <Box
+            component="img"
+            src="/logo.png" // Add a delivery icon in public/assets
+            alt="Delivery Icon"
+            sx={{
+              width: 70,
+              height: 70,
+              mb: 1,
+            }}
+          />
+          <Typography variant="h5" fontWeight={700} sx={{ color: "#1976D2" }}>
+            Delivery Partner Login
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Access your dashboard to manage deliveries
+          </Typography>
+        </Box>
 
+        {/* Username Field */}
         <TextField
           label="Username"
           variant="filled"
@@ -123,11 +136,13 @@ const SignInFormSection = () => {
           sx={{
             "& .MuiFilledInput-root": {
               borderRadius: 2,
+              backgroundColor: "#F3F6FB",
               "&:before, &:after": { borderBottom: "none" },
             },
           }}
         />
 
+        {/* Password Field */}
         <FormControl
           variant="filled"
           fullWidth
@@ -136,6 +151,7 @@ const SignInFormSection = () => {
           sx={{
             "& .MuiFilledInput-root": {
               borderRadius: 2,
+              backgroundColor: "#F3F6FB",
               "&:before, &:after": { borderBottom: "none" },
             },
           }}
@@ -163,24 +179,7 @@ const SignInFormSection = () => {
           )}
         </FormControl>
 
-        <Typography variant="caption" textAlign="center">
-          Don’t have an account?{" "}
-          <Box
-            component="span"
-            sx={{
-              cursor: "pointer",
-              color: "primary.main",
-              fontWeight: 500,
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            }}
-            onClick={() => navigate("/signUp")}
-          >
-            Click here
-          </Box>
-        </Typography>
-
+        {/* Buttons */}
         <Box
           sx={{
             display: "flex",
@@ -198,6 +197,12 @@ const SignInFormSection = () => {
               flex: 1,
               borderRadius: 2,
               py: 1,
+              color: "#1976D2",
+              borderColor: "#1976D2",
+              "&:hover": {
+                backgroundColor: "#E3F2FD",
+                borderColor: "#1565C0",
+              },
             }}
           >
             Reset
@@ -212,12 +217,17 @@ const SignInFormSection = () => {
               flex: 1,
               borderRadius: 2,
               py: 1,
+              backgroundColor: "#1976D2",
+              "&:hover": {
+                backgroundColor: "#1565C0",
+              },
             }}
           >
-            {isSubmitting ? "Submitting..." : "Sign In"}
+            {isSubmitting ? "Logging in..." : "Sign In"}
           </Button>
         </Box>
 
+        {/* Snackbar for Notifications */}
         <CustomSnackbar
           open={snackbar.open}
           onClose={() => setSnackbar({ ...snackbar, open: false })}

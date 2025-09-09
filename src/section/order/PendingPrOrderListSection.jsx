@@ -1,15 +1,19 @@
-import { GetOrdersGroupByAddress } from "../../apis/order/Order";
+import {
+  GetOrdersGroupByAddress,
+  GetPendingOrdersGroupByAddress,
+  GetPendingPrOrdersGroupByAddress,
+} from "../../apis/order/Order";
 import { useEffect, useState } from "react";
 import { Box, Typography, CircularProgress, Grid } from "@mui/material";
 import AddressOrderCard from "../../component/order/AddressOrderCard";
 
-const ReqOrderListSection = () => {
+const PendingPrOrderListSection = () => {
   const [loading, setLoading] = useState(true);
   const [ordersByAddress, setOrdersByAddress] = useState([]);
 
   const fetchOrdersByAddress = async () => {
     setLoading(true);
-    const data = await GetOrdersGroupByAddress();
+    const data = await GetPendingPrOrdersGroupByAddress();
     setOrdersByAddress(data);
     setLoading(false);
   };
@@ -53,7 +57,7 @@ const ReqOrderListSection = () => {
       <Grid container spacing={3}>
         {ordersByAddress.map((orderGroup) => (
           <Grid item xs={12} sm={6} md={4} key={orderGroup.address.address_id}>
-            <AddressOrderCard order={orderGroup} status="all" type="npr" />
+            <AddressOrderCard order={orderGroup} status="pending" type="pr" />
           </Grid>
         ))}
       </Grid>
@@ -61,4 +65,4 @@ const ReqOrderListSection = () => {
   );
 };
 
-export default ReqOrderListSection;
+export default PendingPrOrderListSection;
